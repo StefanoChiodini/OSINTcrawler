@@ -1,1 +1,6 @@
 .env
+URLs.txt
+.vscode
+__pycache__
+.pytest_cache
+```

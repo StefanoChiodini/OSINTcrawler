@@ -9,10 +9,17 @@ def extractURLs(driver):
 
     # i extract all the URLs from the soup object and i store them in a set, so that i can remove the duplicates
     # in this lists there are absolute and relative URLs
-    urlList = set()
+    urlSet = set()
     for url in soup.find_all('a'):
         href = url.get('href')
         if href is not None:
-            urlList.add(href)
+            urlSet.add(href)     
 
-    return urlList        
+    # here i convert the set into a list
+    urlList = list(urlSet)
+
+    return urlList   
+
+# functions to test
+def printSomething():
+    return "something"
