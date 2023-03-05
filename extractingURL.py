@@ -1,7 +1,8 @@
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin # to join the relative URLs with the base URL
 
 # with this function I extract all the URLs from the html page
-def extractURLs(driver):
+def extractURLs(driver, BASEUrl):
     # here i obtain the whole html page
     htmlPage = driver.page_source
     # here i convert the html page into a soup object
@@ -18,7 +19,11 @@ def extractURLs(driver):
     # here i convert the set into a list
     urlList = list(urlSet)
 
-    return urlList   
+    # i convert the relative URLs into absolute URLs
+    for i in range(len(urlList)):
+        urlList[i] = urljoin(BASEUrl, urlList[i])
+
+    return urlList  # list of absolute URLs
 
 # functions to test
 def printSomething():
