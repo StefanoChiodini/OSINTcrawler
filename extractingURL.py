@@ -1,8 +1,16 @@
 from bs4 import BeautifulSoup
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from urllib.parse import urljoin # to join the relative URLs with the base URL
 
 # with this function I extract all the URLs from the html page
 def extractURLs(driver, BASEUrl):
+    #wait until the page is fully loaded
+    wait = WebDriverWait(driver, 10)  # wait for up to 10 seconds
+    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+    wait.until(EC.presence_of_element_located((By.XPATH, "//a")))  # wait for at least one link to be present
+    wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")
     # here i obtain the whole html page
     htmlPage = driver.page_source
     # here i convert the html page into a soup object
@@ -10,21 +18,17 @@ def extractURLs(driver, BASEUrl):
 
     # i extract all the URLs from the soup object and i store them in a set, so that i can remove the duplicates
     # in this lists there are absolute and relative URLs
-    urlSet = set()
+    urlList = []
     for url in soup.find_all('a'):
         href = url.get('href')
         if href is not None:
-            urlSet.add(href)     
-
-    # here i convert the set into a list
-    urlList = list(urlSet)
+            urlList.append(href)     
 
     # i convert the relative URLs into absolute URLs
     for i in range(len(urlList)):
         urlList[i] = urljoin(BASEUrl, urlList[i])
 
-    return urlList  # list of absolute URLs
+    # i remove the duplicates
+    urlList = list(set(urlList))
 
-# functions to test
-def printSomething():
-    return "something"
+    return urlList  # list of absolute and unique URLs
