@@ -39,14 +39,17 @@ def mouseMovement(driver):
 
 # functions that randomly choose a function from the group of functions above and execute it
 def escaping(driver):
-    index = random.randint(0, 2)
-    if index == 0:
-        randomSleep()
-    elif index == 1:
-        scrollDown(driver)
-    elif index == 2:
-        scrollUp(driver)
-    elif index == 3:
-        refreshPage(driver)
-    elif index == 4:
-        mouseMovement(driver)               
+    numberOfActions = random.randint(1, 3)
+    for i in range(numberOfActions):
+        index = random.randint(0, 4)
+
+        if index == 0:
+            randomSleep()
+        elif index == 1:
+            scrollDown(driver)
+        elif index == 2:
+            scrollUp(driver)
+        elif index == 3:
+            refreshPage(driver)
+        elif index == 4:
+            mouseMovement(driver)               
