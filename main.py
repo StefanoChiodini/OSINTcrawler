@@ -11,7 +11,6 @@ from crawlingFunction import *
 # Disable logging output from device_event_log_impl module
 LOGGER.setLevel(logging.WARNING)
 
-
 import os 
 from dotenv import load_dotenv
 
@@ -33,25 +32,34 @@ PASSWORD = os.getenv("PASSWORD")
 EMAIL = os.getenv("EMAIL")
 
 BASEUrl = "https://0x00sec.org" # without the last slash
+#BASEUrl = "https://xss.is"
+#startingURL = "https://xss.is"
+startingURL = "https://0x00sec.org"
 
 # dictionary that collects the results of the crawling
 results = {}
 
 if __name__ == "__main__":
 
-    driver.get("https://0x00sec.org/")
+    driver.get(startingURL)
+    driver.maximize_window()
     
     escaping(driver)
-    userCookie = login(EMAIL, PASSWORD, driver)
+    userCookies = login(EMAIL, PASSWORD, driver)
     escaping(driver)
     
     urlList = extractURLs(driver, BASEUrl)
-    results = crawlingFunction(driver, BASEUrl, urlList, userCookie)
 
-    # print the results in the txt file results.txt
+    # here i add cookies to the driver
+    for cookie in userCookies:
+        driver.add_cookie(cookie)
+
+    results = crawlingFunction(driver, BASEUrl, urlList, userCookies)
+
+    # print the results in the txt file results.txt in a way that is easy to read: there will be only one url and its count per line
     with open("results.txt", "w") as f:
-        for key, value in results.items():
-            f.write("%s: %s" % (key, value))
-    
+        for url in results:
+            f.write(url + " " + str(results[url]) + "\n")
+            
     driver.quit()
 

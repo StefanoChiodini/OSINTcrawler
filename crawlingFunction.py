@@ -12,7 +12,11 @@ clickCounts = {}
 # initialize a list to keep track of visited URLs
 visitedUrls = []
 
-def crawlingFunction(driver, BASEUrl, urlList, userCookie):
+def crawlingFunction(driver, BASEUrl, urlList, userCookies):
+
+    for cookie in userCookies:
+        driver.add_cookie(cookie)
+        
     for url in urlList:
         
         # check if the URL has the same base URL as the website you're crawling -> if not, skip it
@@ -24,8 +28,6 @@ def crawlingFunction(driver, BASEUrl, urlList, userCookie):
             clickCounts[url] += 1
             continue
 
-        # if the URL has not been visited yet, visit it and add it to the list of visited URLs and to the dictionary of click counts
-        #TODO: FIX THIS -> #driver.add_cookie(userCookie)
         escaping(driver)
         driver.get(url)
         escaping(driver)
