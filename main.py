@@ -20,6 +20,7 @@ from userLogin import *
 
 options = Options()
 options.add_experimental_option("detach", True) # this will keep the browser open after the script is finished
+options.add_argument('--headless') # this will hide the browser -> the browser will not be rendered so maybe it will be faster
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_argument('--disable-usb-keyboard-detect')
 options.add_argument('--disable-usb-detection')

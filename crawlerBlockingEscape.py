@@ -1,6 +1,9 @@
 import random 
 import time
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import JavascriptException
+from selenium.common.exceptions import MoveTargetOutOfBoundsException
+
 
 # group of functions to help escape blocking techniques when crawling a website
 
@@ -10,7 +13,13 @@ def randomSleep():
 
 def scrollDown(driver):
     # Scroll down to bottom
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")  
+    try:
+        # perform action that may raise a JavascriptException
+        # for example, scrolling to the bottom of the page
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")  
+    except JavascriptException:
+        time.sleep(1) # if there are some problems with the javascript, i will wait 1 second and then go on with some other action
+
 
 def scrollUp(driver):
     # Scroll up to top
@@ -31,11 +40,14 @@ def mouseMovement(driver):
     actions = ActionChains(driver)
     # move the mouse to random positions in the viewport
     times = random.randint(2, 6)
-    for i in range(times):
-        x = random.randint(0, screen_width)
-        y = random.randint(0, screen_height)
-        actions.move_by_offset(x, y).perform()
-        actions.reset_actions()
+    try: 
+        for i in range(times):
+            x = random.randint(0, screen_width)
+            y = random.randint(0, screen_height)
+            actions.move_by_offset(x, y).perform()
+            actions.reset_actions()
+    except MoveTargetOutOfBoundsException as e:
+        time.sleep(1)
 
 # functions that randomly choose a function from the group of functions above and execute it
 def escaping(driver):
