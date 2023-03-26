@@ -11,3 +11,5 @@ def htmlPageParser(pageSource):
         soup = BeautifulSoup(pageSource, 'html.parser')
 
         # TODO -> here we can extract all the content from the page and format it in json format
+
+        
