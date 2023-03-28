@@ -14,29 +14,23 @@ def removeUselessTags(tag):
             if tag.attrs['as'] == 'script':
                 return "to be removed"
 
-    '''
-    # TODO -> if tag.name == 'link' and in the attributes there is "rel": "stylesheet" it means that the link is a stylesheet or refers to a css file so i can remove it
+    
+    # if tag.name == 'link' and in the attributes there is "rel": "stylesheet" it means that the link is a stylesheet or refers to a css file so i can remove it
     if tag.name == 'link':
         if 'rel' in tag.attrs:
-            if tag.attrs['rel'] == 'stylesheet':
+            if "stylesheet" in tag.attrs['rel']:
                 return "to be removed"
-    '''        
+            
 
     # The <style> tag is used to define style information for an HTML document. The <style> element should contain one or more CSS rules.
     if tag.name == 'style':
-        return "to be removed"
-
-
-    if 'class' in tag.attrs:
         return "to be removed"
 
     # The <symbol> tag is used to define a graphic symbol that can be reused on a page or across a website
     if tag.name == 'symbol':
         return "to be removed"
 
-    #The <path> tag is used to draw shapes such as lines, rectangles, circles, and polygons. It can 
-    # also be used to create complex curves and shapes. The <path> tag contains a series of commands 
-    # and parameters that define the path or shape.
+    #The <path> tag is used to draw shapes such as lines, rectangles, circles, and polygons. It can also be used to create complex curves and shapes.
     if tag.name == 'path':
         return "to be removed"
     
@@ -48,9 +42,20 @@ def removeUselessTags(tag):
     if tag.name == 'rect':
         return "to be removed"
     
-    # TODO: ignore all tags in this style:  "whatever tag name": [],
-    for child in tag.children:
-            if child.name == False and child.contents == False:
-                return "to be removed"
+    #The "use" tag in HTML is used to insert and reuse SVG graphics into an HTML document. It allows you to reference an SVG file or an SVG element from within the same document or from a different file,
+    if tag.name == 'use':
+        return "to be removed"
+    
+    #The <g> tag is used to group SVG shapes together. It is used to apply the same style properties to multiple shapes.
+    if tag.name == 'g':
+        return "to be removed"
+    
+    #The <defs> tag is used to define SVG graphics that can be used later in the document. The <defs> tag is used to group SVG shapes together. It is used to apply the same style properties to multiple shapes.
+    if tag.name == 'defs':
+        return "to be removed"
+    
+    #The <clipPath> tag is used to define a clipping path. A clipping path is used to restrict the region to which paint can be applied. A clipping path is used to restrict the region to which paint can be applied.
+    if tag.name == 'clippath':
+        return "to be removed"
 
     return "to be kept"

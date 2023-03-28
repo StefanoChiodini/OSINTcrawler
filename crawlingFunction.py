@@ -9,6 +9,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from savingResults import *
 
 # initialize a list to keep track of visited URLs
 visitedUrls = []
@@ -51,21 +52,27 @@ def crawlingFunction(driver, BASEUrl, urlList, userCookies):
         pageSource = driver.page_source
 
         # if i arrive here, it means that the URL has been visited for the first time and the page has been retrieved successfully    
-        # TODO: DA OGNI URL BISOGNA ESTRARRE IL CONTENUTO DELLA PAGINA E PARSARLO IN UN FORMATO TIPO JSON -> FARLO IN QUESTO PUNTO
+        # check if the page is successfully loaded
+        if pageSource is not None:
 
-        htmlPageParser(pageSource)
-        # extract all the URLs from the already downloaded page. Page source is the html page
-        # functions return a list of URLs -> then i will insert them in the list of URLs to be visited to keep crawling the website
-        linksList = extractURLs(pageSource, url)
-        escaping(driver)
+            pageContent = htmlPageParser(pageSource, url) # extract all the content from the page (tags, text, etc.)
 
-        visitedUrls.append(url)
+            # extract all the URLs from the already downloaded page. Page source is the html page
+            # functions return a list of URLs -> then i will insert them in the list of URLs to be visited to keep crawling the website
+            linksList = extractURLs(pageSource, url)
+            escaping(driver)
 
-        # insert all the URLs extracted from the current URL into the list of URLs to be visited and the make the list unique
-        for link in linksList:
-                urlList.append(link)
+            visitedUrls.append(url)
 
-        # make the list unique
-        urlList = list(set(urlList))
+            # insert all the URLs extracted from the current URL into the list of URLs to be visited and the make the list unique
+            for link in linksList:
+                    urlList.append(link)
 
-    return True # TODO: CHANGE RETURN VALUE
+            # make the list unique
+            urlList = list(set(urlList))
+
+            # save results
+            saveResults(pageContent, BASEUrl, url, urlList)
+    
+        else:
+            continue

@@ -1,8 +1,0 @@
-"https://www.nulled.to/", # funziona male senza tor (login required and done)
-"https://0x00sec.org/", # login required and done
-"https://altenens.is/", # login required and done
-"https://forum.exetools.com/", # invitation code required during registration -> registration not done
-"https://www.go4expert.com/", registration done -> must be approved by admin
-"https://www.kernelmode.info/forum/", # no login required
-"https://www.wilderssecurity.com/", # registration done
-
