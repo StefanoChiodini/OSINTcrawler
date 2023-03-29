@@ -3,12 +3,11 @@ from urllib.parse import urljoin # to join the relative URLs with the base URL
 
 # with this function I extract all the URLs from the html page
 def extractURLs(pageSource, BASEUrl):
-
-    htmlPage = pageSource
-    # check if the page is successfully loaded
-    if htmlPage is not None:
+        
+    # check if the page is successfully loaded -> in this case is the home page
+    if pageSource is not None:
         # here i convert the html page into a soup object
-        soup = BeautifulSoup(htmlPage, 'html.parser')
+        soup = BeautifulSoup(pageSource, 'html.parser')
 
         # i extract all the URLs from the soup object and i store them in a set, so that i can remove the duplicates
         # in this lists there are absolute and relative URLs

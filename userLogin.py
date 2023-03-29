@@ -28,8 +28,6 @@ def login(email, password, driver):
     wait.until(EC.presence_of_element_located((By.XPATH, "//a")))  # wait for at least one link to be present
     wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")
 
-    # TODO:after the login i need to check if the user has to accept the cookies
-
     # after login i get the user cookies and i append them in every request
     cookies = driver.get_cookies()
     return cookies

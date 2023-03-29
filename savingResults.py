@@ -1,9 +1,13 @@
 import os
 import json
 
-def saveResults(pageContent, BASEUrl, url, urlList):
+def saveResults(pageContent, BASEUrl, url, urlList, crawlingType):
     # create result directory if it doesn't exist
-    resultDir = 'result'
+    if crawlingType == "selenium":
+        resultDir = 'seleniumResults'
+    else:
+        resultDir = 'requestsResults'
+            
     if not os.path.exists(resultDir):
         os.mkdir(resultDir)
 

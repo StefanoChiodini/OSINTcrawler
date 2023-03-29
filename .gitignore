@@ -3,5 +3,6 @@ URLs.txt
 .vscode
 __pycache__
 .pytest_cache
-results.txt
+seleniumResults
+requestsResults
 ```

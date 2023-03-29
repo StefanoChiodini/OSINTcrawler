@@ -49,8 +49,26 @@ def mouseMovement(driver):
     except MoveTargetOutOfBoundsException as e:
         time.sleep(1)
 
+# i rotate the user agent to avoid being blocked by the website
+userAgentDict = {
+                    0: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+                    1: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
+                    2: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
+                    3: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
+                    4: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0",
+                    5: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+                    6: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59",
+                    7: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+                }
+
+def changeUserAgent():
+    # change the user agent to avoid being blocked by the website, extract a random user agent from the dictionary and return it as a dictionary
+    index = random.randint(0, len(userAgentDict) - 1)
+    return userAgentDict[index]
+
+
 # functions that randomly choose a function from the group of functions above and execute it
-def escaping(driver):
+def seleniumEscaping(driver):
     numberOfActions = random.randint(1, 3)
     for i in range(numberOfActions):
         index = random.randint(0, 4)
@@ -64,4 +82,22 @@ def escaping(driver):
         elif index == 3:
             refreshPage(driver)
         elif index == 4:
-            mouseMovement(driver)               
+            mouseMovement(driver)  
+
+
+def requestEscaping():
+    numberOfActions = random.randint(1, 3)
+    for i in range(numberOfActions):
+        index = random.randint(0, 1)
+        if index == 0:
+            randomSleep()
+        if index == 1:
+            # the dictionary line extracted is in this form-> 0: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+            # but had to became like this -> {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36"}
+            # so i can use it as a header
+            userAgent = changeUserAgent()
+            userAgent = {"User-Agent": userAgent}
+            return userAgent
+        
+    randomSleep()  # if user agent remains the same i will stay idle for a random amount of time
+    return "not changed"

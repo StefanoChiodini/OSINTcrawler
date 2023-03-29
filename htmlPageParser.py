@@ -1,6 +1,6 @@
 # here escaping functions are not required, the page is already downloaded so i proceed to format the page in json format
 from bs4 import BeautifulSoup
-from filteredTHTMLtag import *
+from filteredHTMLtag import *
 
 # with this function i extract all the content from the html page and i format it in json format
 def htmlPageParser(pageSource, url):
