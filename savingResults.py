@@ -12,7 +12,13 @@ def saveResults(pageContent, BASEUrl, url, urlList):
     fileName = url + '.json'
 
     # convert the dictionary to JSON and save to a file
-    output_file = os.path.join(resultDir, fileName)
-    with open(output_file, 'w') as f:
+    outputFileJson = os.path.join(resultDir, fileName)
+    with open(outputFileJson, 'w') as f:
         json.dump(pageContent, f, indent=3)
+
+    outputFileTxt = os.path.join(resultDir, 'urls.txt')
+    # evry time i arrive here i append the url to the file urls.txt
+    with open(outputFileTxt, 'a') as f:
+        for link in urlList:
+            f.write(link + "\n")    
 

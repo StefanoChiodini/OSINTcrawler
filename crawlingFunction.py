@@ -18,7 +18,8 @@ def crawlingFunction(driver, BASEUrl, urlList, userCookies):
 
     for cookie in userCookies:
         driver.add_cookie(cookie)
-        
+
+    print("Crawling started...")    
     for url in urlList:
         
         # check if the URL has the same base URL as the website you're crawling -> if not, skip it
@@ -43,11 +44,12 @@ def crawlingFunction(driver, BASEUrl, urlList, userCookies):
             wait = WebDriverWait(driver, 10)  # wait for up to 10 seconds
             wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
             wait.until(EC.presence_of_element_located((By.XPATH, "//a")))  # wait for at least one link to be present
-            wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete")   
+            wait.until(lambda driver: driver.execute_script("return document.readyState") == "complete") 
+
         except TimeoutException as e:
             # if the page is not loaded in 10 seconds, i will return an empty list TODO -> CHECK THE RETURN VALUE
-            return []
-        
+            continue # go to the next ppage   
+
         # get the whole page source
         pageSource = driver.page_source
 
@@ -72,7 +74,7 @@ def crawlingFunction(driver, BASEUrl, urlList, userCookies):
             urlList = list(set(urlList))
 
             # save results
-            saveResults(pageContent, BASEUrl, url, urlList)
+            saveResults(pageContent, BASEUrl, url, linksList)
     
         else:
             continue
