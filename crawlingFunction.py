@@ -71,7 +71,7 @@ def seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies):
             # save results
             crawlingType = "selenium"
             saveResults(pageContent, BASEUrl, url, linksList, crawlingType)
-    
+
         else:
             continue
     
@@ -140,7 +140,7 @@ def requestsCrawlingFunction(session, BASEUrl, urlList):
             # save results
             crawlingType = "requests"
             saveResults(pageContent, BASEUrl, url, linksList, crawlingType)
-    
+
         else:
             continue
 
