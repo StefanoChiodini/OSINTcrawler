@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup
 from filteredHTMLtag import *
 import threading
+from readableFormat import *
 
 # here we can extract all the content from the page and format it in json format
 def extract_tag_data(tag):
@@ -10,7 +11,7 @@ def extract_tag_data(tag):
         return "to be removed" # TODO -> CLEAN THE CODE HERE
             
     else :
-        if tag.name is not None and (tag.text.strip() != '' or tag.attrs):
+        if tag.name == "article" or tag.name == "head":#is not None and (tag.text.strip() != '' or tag.attrs):
             data = {
                     'name': tag.name,
                     'text': tag.get_text(strip=True),
@@ -59,6 +60,8 @@ def htmlPageParser(pageSource, url):
     final_result = []
     for result in results:
         final_result += result
+
+    #final_result = obtainReadableFormat(final_result)
 
     # extract the data and store in a dictionary -> to be formatted in json format
     pageData = {

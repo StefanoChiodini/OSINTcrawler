@@ -57,5 +57,8 @@ def removeUselessTags(tag):
     #The <clipPath> tag is used to define a clipping path. A clipping path is used to restrict the region to which paint can be applied. A clipping path is used to restrict the region to which paint can be applied.
     if tag.name == 'clippath':
         return "to be removed"
+    
+    if tag.name == 'meta':
+        return "to be removed"
 
     return "to be kept"
