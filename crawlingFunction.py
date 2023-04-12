@@ -100,6 +100,15 @@ def requestsCrawlingFunction(session, BASEUrl, urlList):
         # check if the URL has already been visited -> if yes, skip it and increment the counter associated with the URL
         if url in visitedUrls:
             continue
+        
+        if "/u/" in url: # if the URL is a user profile, skip it
+            continue
+        
+        if "/c/" in url: # if the URL is a category, skip it
+            continue
+
+        if "/tag/" in url: # if the URL is a tag, skip it
+            continue
 
         changeUserAgent = requestEscaping()
 
