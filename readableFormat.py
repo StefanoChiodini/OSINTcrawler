@@ -1,20 +1,8 @@
 # in this class i filter and trasform the html page in a readable format
-
+# TODO: use this link for testing "https://0x00sec.org/t/malware-development-1-password-stealers-chrome/33571"
 def obtainReadableFormat(htmlPage):
-    # TODO: take for every post and comment the one with tag div and attributes like this:
-    #          "attrs": {
-    #        "itemprop": "articleBody"
-    #     }
+   '''
 
-    '''
-          {
-         "name": "span",
-         "text": "Cromical",
-         "attrs": {
-            "itemprop": "author", -> use this to find the author of the post
-            "itemscope": "",
-            "itemtype": "http://schema.org/Person"
-         }
       },
 
             {
@@ -44,22 +32,31 @@ def obtainReadableFormat(htmlPage):
             "data-user-id": "24"
          }
       },
-    '''
-    # filter out every tag that is not an article
-    data = []
-    for tag in htmlPage.find_all("article"):
+   '''
 
-        if tag.name == "article":
+   # filter out every tag that is not an article
+   data = []
+   for tag in htmlPage.descendants:
+
+      if tag.name == "head":
+         data1 = {
+                  'name': tag.name,
+                  'text': tag.get_text(strip=True),
+                  }
+         data.append(data1)        
+ 
+      elif tag.name == "article":
             data1 = {
                     'name': tag.name,
                     'text': tag.get_text(strip=True),
-                    'attrs': {}
+                    'attrs': {},
+                    'timestamp': ''
                     }
             for attr, value in tag.attrs.items():
 
-                if attr not in ['class', 'style', 'width', 'height', 'loading']: # here i remove the useless attributes
-                    data1['attrs'][attr] = value
+               if attr not in ['class', 'style', 'width', 'height', 'loading', 'role']: # here i remove the useless attributes
+                  data1['attrs'][attr] = value
 
             data.append(data1)        
 
-    return data
+   return data

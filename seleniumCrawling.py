@@ -51,6 +51,6 @@ def seleniumCrawling():
     for cookie in userCookies:
         driver.add_cookie(cookie)
 
-    #seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies)
-
+    seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies)
+    
     driver.quit()

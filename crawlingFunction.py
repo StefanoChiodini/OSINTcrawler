@@ -30,6 +30,15 @@ def seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies):
         if url in visitedUrls:
             continue
 
+        if "/u/" in url: # if the URL is a user profile, skip it
+            continue
+        
+        if "/c/" in url: # if the URL is a category, skip it
+            continue
+
+        if "/tag/" in url: # if the URL is a tag, skip it
+            continue
+        
         seleniumEscaping(driver)
         driver.get(url)
         seleniumEscaping(driver)

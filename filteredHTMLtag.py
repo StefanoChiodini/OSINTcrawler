@@ -1,7 +1,7 @@
 # in this class we will filter the html tags from the text extracted from the html page
 # I think that all this filtered tags are useless for a person that wants to read the page
 #filter out style and class inside attrs, skip all the symbol, path, svg tags 
-
+'''
 def removeUselessTags(tag):
 
     # The <script> tag is used to define a client-side script (JavaScript). The <script> element either contains scripting statements, or it points to an external script file through the src attribute. The <script> element is used in conjunction with the HTML DOM to interact with the user.
@@ -62,3 +62,4 @@ def removeUselessTags(tag):
         return "to be removed"
 
     return "to be kept"
+'''

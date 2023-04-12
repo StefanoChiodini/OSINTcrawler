@@ -18,7 +18,7 @@ def saveResults(pageContent, BASEUrl, url, urlList, crawlingType):
     # convert the dictionary to JSON and save to a file
     outputFileJson = os.path.join(resultDir, fileName)
     with open(outputFileJson, 'w') as f:
-        json.dump(pageContent, f, indent=3)
+        json.dump(pageContent, f, indent = 4)
 
     outputFileTxt = os.path.join(resultDir, 'urls.txt')
     # evry time i arrive here i append the url to the file urls.txt
