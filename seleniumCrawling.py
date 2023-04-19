@@ -41,16 +41,24 @@ def seleniumCrawling():
 
     seleniumEscaping(driver)
     userCookies = login(EMAIL, PASSWORD, driver)
-    seleniumEscaping(driver)
-        
-    pageSource = driver.page_source
-
-    urlList = extractURLs(pageSource, BASEUrl)
-
-    # here i add cookies to the driver
-    for cookie in userCookies:
-        driver.add_cookie(cookie)
-
-    seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies)
+    if userCookies == None:
+        print("Login failed")
+        driver.quit()
+        return
     
-    driver.quit()
+    else: # the login was successful
+        print("Login successful")
+        seleniumEscaping(driver)
+            
+        pageSource = driver.page_source
+
+        urlList = extractURLs(pageSource, BASEUrl)
+
+        # here i add cookies to the driver
+        for cookie in userCookies:
+            driver.add_cookie(cookie)
+
+        print("length of urlList: ", len(urlList))
+        seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies)
+        
+        driver.quit()
