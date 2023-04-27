@@ -4,9 +4,9 @@ import json
 def saveResults(pageContent, BASEUrl, url, urlList, crawlingType):
     # create result directory if it doesn't exist
     if crawlingType == "selenium":
-        resultDir = 'seleniumResults'
+        resultDir = 'seleniumResultsLive'
     else:
-        resultDir = 'requestsResults'
+        resultDir = 'requestsResultsLive'
             
     if not os.path.exists(resultDir):
         os.mkdir(resultDir)
@@ -16,8 +16,6 @@ def saveResults(pageContent, BASEUrl, url, urlList, crawlingType):
     url = url.replace('?', '_')
     url = url.replace('\\', '_')
     fileName = url + '.json'
-    fileName = 'Posts.json'
-
     # convert the dictionary to JSON and save to a file
     outputFileJson = os.path.join(resultDir, fileName)
     with open(outputFileJson, 'a') as f:

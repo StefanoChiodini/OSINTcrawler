@@ -11,6 +11,7 @@ def randomSleep():
     # Sleep for a random amount of time between 1 and 3 seconds
     time.sleep(random.randint(1, 3))
 
+
 def scrollDown(driver):
     # Scroll down to bottom
     try:
@@ -25,12 +26,13 @@ def scrollUp(driver):
     # Scroll up to top
     driver.execute_script("window.scrollTo(0, 0);")   
 
+
 def refreshPage(driver):
     # Refresh the page
     time.sleep(0.2)
     driver.refresh()    
 
-# TODO: THIS FUNCTION IS NOT WORKING
+
 def mouseMovement(driver):
     # get the dimensions of the viewport
     # get the width and height of the screen
@@ -49,23 +51,6 @@ def mouseMovement(driver):
     except MoveTargetOutOfBoundsException as e:
         time.sleep(1)
 
-# i rotate the user agent to avoid being blocked by the website
-userAgentDict = {
-                    0: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-                    1: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
-                    2: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
-                    3: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
-                    4: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0",
-                    5: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
-                    6: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59",
-                    7: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-                }
-
-def changeUserAgent():
-    # change the user agent to avoid being blocked by the website, extract a random user agent from the dictionary and return it as a dictionary
-    index = random.randint(0, len(userAgentDict) - 1)
-    return userAgentDict[index]
-
 
 # functions that randomly choose a function from the group of functions above and execute it
 def seleniumEscaping(driver):
@@ -83,6 +68,25 @@ def seleniumEscaping(driver):
             refreshPage(driver)
         elif index == 4:
             mouseMovement(driver)  
+
+
+# i rotate the user agent to avoid being blocked by the website
+userAgentDict = {
+                    0: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
+                    1: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:74.0) Gecko/20100101 Firefox/74.0",
+                    2: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299",
+                    3: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
+                    4: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0",
+                    5: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+                    6: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59",
+                    7: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+                }
+
+
+def changeUserAgent():
+    # change the user agent to avoid being blocked by the website, extract a random user agent from the dictionary and return it as a dictionary
+    index = random.randint(0, len(userAgentDict) - 1)
+    return userAgentDict[index]
 
 
 def requestEscaping():

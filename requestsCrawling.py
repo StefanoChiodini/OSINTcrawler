@@ -26,8 +26,7 @@ def login(session, user, psw):
     else:
         return False # login failed
 
-# TODO: MAYBE THE GET REQUESTS DOES NOT DOWNLOAD THE WHOLE PAGE BECAUSE OF THE SIZE OF THE PAGE(IT MIGHT BE TOO BIG)
-# KEEP DOING GET REQUESTS UNTIL THE PAGE IS COMPLETELY DOWNLOADED
+
 def requestsCrawling():
 
     load_dotenv()

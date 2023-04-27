@@ -19,9 +19,6 @@ def seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies):
 
     for cookie in userCookies:
         driver.add_cookie(cookie)
-    counter = 0
-    counterUselessURL = 0
-    pageSourceNoneCounter = 0
 
     print("Selenium crawling started...") 
     while(len(urlList) > 0):
@@ -30,32 +27,33 @@ def seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies):
         # parse the URL
         parsed_url = urlparse(url)
 
-        # remove the fragment identifier (the part after the # symbol)
-        parsed_url = parsed_url._replace(fragment='')
+        # remove the fragment identifier (the part after the # symbol) and the query string (the part after the ? symbol)
+        parsed_url = parsed_url._replace(fragment='')._replace(query='')
 
         # convert the URL back to a string
-        url = urlunparse(parsed_url)
+        path_components = parsed_url.path.split('/')
+        # Remove any numeric parts from the end of the URL
+        while path_components[-1].isdigit():
+            path_components = path_components[:-1]
+
+        base_path = '/'.join(path_components)
+        url = urlunparse((parsed_url.scheme, parsed_url.netloc, base_path, "", "", ""))
 
         # check if the URL has the same base URL as the website you're crawling -> if not, skip it
         if not url.startswith(BASEUrl):
-            counterUselessURL += 1
             continue
 
         # check if the URL has already been visited -> if yes, skip it and increment the counter associated with the URL
         if url in visitedUrls:
-            counterUselessURL += 1
             continue
 
         if "/u/" in url: # if the URL is a user profile, skip it
-            counterUselessURL += 1
             continue
         
         if "/c/" in url: # if the URL is a category, skip it
-            counterUselessURL += 1
             continue
 
         if "/tag/" in url: # if the URL is a tag, skip it
-            counterUselessURL += 1
             continue
         
         seleniumEscaping(driver)
@@ -105,10 +103,7 @@ def seleniumCrawlingFunction(driver, BASEUrl, urlList, userCookies):
             continue
     
     print("Selenium crawling finished!") 
-    print("Total number of URLs visited: " + str(counter)) 
-    print("total number of useless URLs: " + str(counterUselessURL))
-    print("total number of useful URLs: " + str(counter - counterUselessURL))
-
+    
 
 def requestsCrawlingFunction(session, BASEUrl, urlList):
 
@@ -119,11 +114,17 @@ def requestsCrawlingFunction(session, BASEUrl, urlList):
         # parse the URL
         parsed_url = urlparse(url)
 
-        # remove the fragment identifier (the part after the # symbol)
-        parsed_url = parsed_url._replace(fragment='')
+        # remove the fragment identifier (the part after the # symbol) and the query string (the part after the ? symbol)
+        parsed_url = parsed_url._replace(fragment='')._replace(query='')
 
         # convert the URL back to a string
-        url = urlunparse(parsed_url)
+        path_components = parsed_url.path.split('/')
+        # Remove any numeric parts from the end of the URL
+        while path_components[-1].isdigit():
+            path_components = path_components[:-1]
+            
+        base_path = '/'.join(path_components)
+        url = urlunparse((parsed_url.scheme, parsed_url.netloc, base_path, "", "", ""))
         
         # check if the URL has the same base URL as the website you're crawling -> if not, skip it
         if not url.startswith(BASEUrl):
